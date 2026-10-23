@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="zh-CN">
+  <meta charset="UTF-8" /><meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  /><title>FF Lens · 检查测试页</title
+  ><style>
+    body {
+      margin: 0;
+      background: #f0f4f8;
+      color: #13243b;
+      font: 16px/1.6 system-ui;
+    }
+    main {
+      max-width: 950px;
+      margin: 60px auto;
+      padding: 24px;
+    }
+    h1 {
+      font-size: 44px;
+      letter-spacing: -2px;
+    }
+    section {
+      background: white;
+      border: 1px solid #d6e0e9;
+      border-radius: 18px;
+      padding: 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 8px 40px #1938540c;
+    }
+    .flex {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    button,
+    a {
+      padding: 12px 20px;
+      background: #2563eb;
+      color: white;
+      border: 0;
+      border-radius: 9px;
+      cursor: pointer;
+      font: 600 15px system-ui;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .tile {
+      padding: 30px;
+      background: #0e2238;
+      color: #67e8f9;
+      border-radius: 12px;
+    }
+    .transparent {
+      background: rgba(37, 99, 235, 0.18);
+      color: rgba(20, 30, 40, 0.7);
+      border: 3px solid #44aa88;
+    }
+    .transformed {
+      transform: rotate(-3deg) scale(0.95);
+      margin: -4px 10px 5px 0;
+    }
+    .scroll {
+      height: 150px;
+      overflow: auto;
+    }
+    .scroll div {
+      height: 400px;
+      background: linear-gradient(#e0f2fe, #bae6fd);
+    }
+    .long {
+      overflow-wrap: anywhere;
+    }
+    input {
+      padding: 12px;
+      border: 1px solid #abbccc;
+    }
+  </style>
+  <main>
+    <small>FF LENS / VALIDATION PLAYGROUND</small>
+    <h1>每一个像素，都有迹可循。</h1>
+    <p>用于验证拾取保护、布局、计算样式、透明颜色与动态节点。</p>
+    <section>
+      <h2>Flex 与交互保护</h2>
+      <div class="flex">
+        <button id="counter">点击计数：0</button
+        ><a href="#destination">测试链接跳转</a
+        ><input
+          type="password"
+          placeholder="不读取输入值"
+          aria-label="测试密码输入"
+        />
+      </div>
+    </section>
+    <section>
+      <h2>Grid 与特殊盒模型</h2>
+      <div class="grid">
+        <div class="tile">Grid item</div>
+        <div class="tile transparent">透明背景</div>
+        <div class="tile transformed">变换 + 负 margin</div>
+      </div>
+    </section>
+    <section>
+      <h2>长文本与滚动容器</h2>
+      <p class="long">
+        long-class-content-with-an-extraordinarily-long-unbroken-string-012345678901234567890123456789
+      </p>
+      <div class="scroll"><div>滚动后检查高亮坐标</div></div>
+    </section>
+    <section>
+      <h2>动态删除</h2>
+      <div id="removable" class="tile">先选中此元素，再点击下方按钮删除</div>
+      <button id="remove">删除目标节点</button
+      ><button id="many">添加 5,100 个元素测试扫描上限</button>
+    </section>
+    <section id="destination">
+      <h2>文档末尾</h2>
+      <p>iframe 与 Shadow DOM 内部不在首版支持范围内。</p>
+      <iframe
+        title="不支持的 iframe"
+        srcdoc="<button>iframe 内部按钮</button>"
+      ></iframe>
+      <div id="shadow"></div>
+    </section>
+  </main>
+  <script>
+    let n = 0;
+    document.querySelector("#counter").onclick = (e) =>
+      (e.target.textContent = "点击计数：" + ++n);
+    document.querySelector("#remove").onclick = () =>
+      document.querySelector("#removable")?.remove();
+    document.querySelector("#many").onclick = () => {
+      const f = document.createDocumentFragment();
+      for (let i = 0; i < 5100; i++) {
+        const el = document.createElement("div");
+        el.textContent = "扫描测试 " + i;
+        f.append(el);
+      }
+      document.querySelector("main").append(f);
+    };
+    document.querySelector("#shadow").attachShadow({ mode: "open" }).innerHTML =
+      "<button>Shadow DOM 内部按钮</button>";
+  </script>
+</html>

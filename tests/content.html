@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-CN">
+  <meta charset="utf-8" /><meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  /><title>FF Lens · 内容脚本交互回归</title
+  ><style>
+    body {
+      font: 17px/1.8 system-ui;
+      padding: 40px;
+      color: #20372e;
+    }
+    button {
+      padding: 12px 20px;
+      margin-right: 12px;
+      cursor: pointer;
+      font: inherit;
+    }
+    #target {
+      display: flex;
+      align-items: center;
+      background: #156f56;
+      color: white;
+      border: 0;
+      padding: 12px 20px;
+      border-radius: 8px;
+      margin-top: 24px;
+    }
+    output {
+      display: block;
+      margin: 20px 0;
+      white-space: pre-wrap;
+    }
+    small {
+      color: #65796e;
+    }
+  </style>
+  <h1>内容脚本交互回归</h1>
+  <p>使用真实 DOM 和鼠标/键盘事件，仅 Chrome 消息层使用测试替身。</p>
+  <button id="pick">开启拾取</button
+  ><button id="clear">发送 CLEAR</button
+  ><button id="target">页面按钮 · 点击 0 次</button
+  ><output id="status">等待加载</output
+  ><small
+    >验收：开启拾取 → 点击页面按钮（计数不变）→ Esc（选中与监听清除）→
+    再次点击（计数递增）。</small
+  >
+  <script type="module" src="./content.ts"></script>
+</html>

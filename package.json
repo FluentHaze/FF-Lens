@@ -1,0 +1,30 @@
+{
+  "name": "ff-lens",
+  "version": "1.2.2",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "tsc --noEmit && vite build && vite build --config vite.content.config.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "node --experimental-strip-types --test src/*.test.ts",
+    "format": "prettier --write src tests public *.json *.ts index.html",
+    "format:check": "prettier --check src tests public *.json *.ts index.html"
+  },
+  "dependencies": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.1.24",
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "postcss": "^8.5.31",
+    "prettier": "^3.9.10",
+    "tailwindcss-v3": "npm:tailwindcss@^3.4.17",
+    "tailwindcss-v4": "npm:tailwindcss@^4.3.3",
+    "typescript": "~5.9.3",
+    "vite": "^7.2.0"
+  }
+}
